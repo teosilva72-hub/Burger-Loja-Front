@@ -1,0 +1,14 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.registerUser{
+    position: absolute;
+    top: 5%;
+    box-sizing: border-box;
+}
+.attrSpan{
+    font-weight: 900;
+    text-decoration: blue;
+}
