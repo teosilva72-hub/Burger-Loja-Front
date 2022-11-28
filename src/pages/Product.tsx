@@ -1,12 +1,21 @@
 import NavBar from './template';
 import React, { Component } from 'react';
+import axios from 'axios';
+import Service from '../service/backend';
+import API from '../service/InterfacesApi';
+const Product = () => {
+    (async () => {
+       const res:API = await Service.Product();
+       if(res.status){
 
-function Product() {
-
+       }else{
+        
+       }
+    })();
     return (
-        <div>
+        <main className='Product'>
             <NavBar />
-        </div>
+        </main>
     );
 }
 

@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import '../assets/css/login.css'
 import jpIMG from "../assets/img/jp.svg";
 import NavBar from './template';
+import axios from 'axios';
+import Service from '../service/backend';
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [success, setSuccess] = useState(false);
+
+    const requestLogin = async(e:any) =>{
+        e.preventDefault();
+        const checked:any = await Service.Login(email, password);
+        console.log(checked)
+    }
+    
     return (
         <main>
             <NavBar />
             <div className="container">
                 <div className="container-login">
                     <div className="wrap-login">
-                        <form className="login-form">
+                        <form className="login-form" onSubmit={requestLogin}>
                             <span className="login-form-title"> Bem vindo </span>
                             <span className="login-form-title">
                                 <img src={jpIMG} alt="Jovem Programador" />
@@ -37,7 +48,7 @@ const Login = () => {
                                 <span className="focus-input" data-placeholder="Password"></span>
                             </div>
                             <div className="container-login-form-btn">
-                                <button className="login-form-btn">Login</button>
+                                <button type='submit' className="login-form-btn">Login</button>
                             </div>
                             <div className="text-center">
                                 <span className="txt1">Não possui conta? </span>
