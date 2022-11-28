@@ -4,3 +4,7 @@ export default interface API{
     code:number,
     data:object
 }
+
+export interface Iprodutct{
+    _id:string
+}
