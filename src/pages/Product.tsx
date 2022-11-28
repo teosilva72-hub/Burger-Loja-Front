@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import Service from '../service/backend';
 import API, { Iprodutct } from '../service/InterfacesApi';
 import { useEffect, useState } from 'react';
+import '../assets/css/product.css'
 const Product = () => {
     const [mudar, setMudar] = useState<boolean>(false);
     const [res, setRes] = useState<Array<Iprodutct> | null>(null);
@@ -18,32 +19,40 @@ const Product = () => {
     async function getData() {
         const response: AxiosResponse<Iprodutct> = await Service.Product();
         setRes(response.data as any);
+        const token = localStorage.getItem('Bearer');
+
+        if (token) {
+
+        }
     }
 
     return (
         <main className='Product'>
             <NavBar />
-            <h1> Teste</h1>
-            <h1> Teste</h1>
-            {res?.map((e: any, id: number) => {
-                return (
-                    <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title">{e.batata ?? '...'}</h5>
-                            <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" className="card-link">Card link</a>
-                            <a href="#" className="card-link">Another link</a>
-                        </div>
+            <section className='sectionProduct'>
+                <div className='container'>
+                    <h2 className='bg-dark title text-center'>Produtos</h2>
+                    <div className='row'>
+                        {res?.map((e: any, id: number) => {
+                            return (
+                                <div className='col-sm-12 col-md-6 col-lg-3 mb-3' key={e._id}>
+                                    <div className="card" id={e._id} >
+                                        <div className="card-body">
+                                            <h5 className="card-title">{e.nome ?? '...'}</h5>
+                                            <h6 className="card-subtitle mb-2 text-muted">{e.categoria}</h6>
+                                            <p className="card-text">Descrição: {e.descricao}</p>
+                                            <a href="#" className="card-link">Card link</a>
+                                            <a href="#" className="card-link">Another link</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
-                )
-            })}
+                </div>
+            </section>
 
-            {/* <button
-            onClick={()=>{
-                setMudar(!mudar)
-            }}
-            >Mudar nome</button> */}
+
         </main>
     );
 }

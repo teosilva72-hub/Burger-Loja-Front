@@ -3,7 +3,7 @@ import { Component } from "react";
 export default class NavBar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+      <nav className="navbar navbar-expand-lg bg-dark navbar-dark fixed-top" id='teste'>
         <div className="container-fluid">
           <a className="navbar-brand" href="#">Empresa</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,10 +14,10 @@ export default class NavBar extends Component {
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="#">Home</a>
               </li>
-              <li className="nav-item">
+              <li className="nav-item auth">
                 <a className="nav-link" href="/product">Produto</a>
               </li>
-              <li className="nav-item">
+              <li className="nav-item auth">
                 <a className="nav-link" href="/login">Login</a>
               </li>
               <li className="nav-item">

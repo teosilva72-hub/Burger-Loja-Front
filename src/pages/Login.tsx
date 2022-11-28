@@ -5,23 +5,35 @@ import jpIMG from "../assets/img/jp.svg";
 import NavBar from './template';
 import axios from 'axios';
 import Service from '../service/backend';
+import { useNavigate, useNavigation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
-    const requestLogin = async(e:any) =>{
+    const requestLogin = async (e: any) => {
         e.preventDefault();
-        const checked:any = await Service.Login(email, password);
-        console.log(checked)
+        const checked: any = await Service.Login(email, password);
+        if (checked) {
+            toast.success('Acesso Autorizado!', {
+                className: 'toast-success',
+                theme: 'colored',
+            });
+            setTimeout(() => {
+                navigate('/');
+            }, 3000)
+        }
     }
-    
+
     return (
         <main>
             <NavBar />
             <div className="container">
+
                 <div className="container-login">
                     <div className="wrap-login">
                         <form className="login-form" onSubmit={requestLogin}>

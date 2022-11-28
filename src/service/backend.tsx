@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import API from './InterfacesApi';
 export default new class {
 
@@ -32,16 +33,19 @@ export default new class {
                 redirect('localhost:3000/')
                 return true;
             }
-            alert(res.data)
+            //alert(res.data)
             //return false;            
-        } catch (error) {
-            return false;
-        }
+        } catch (err: any) {
+             toast.error('Usuário ou senha incorreto!', {
+              className: 'toast-error',
+              theme: 'colored',
+            });
+          }
     }
 
     async Product() {
         try {
-            await this.token('product');
+            //await this.token('product');
             const product:API = await axios.get('http://localhost:3005/product-list');
             return product.data;
         } catch (error) {
