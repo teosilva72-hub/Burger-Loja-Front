@@ -3,6 +3,7 @@ import NavBar from './template';
 import { useState } from 'react';
 import Service from '../service/backend';
 import { useNavigate } from 'react-router';
+import '../assets/css/registerUser.css';
 const RegisterUser = () => {
     const [name, setName] = useState('');
     const [user, setUser] = useState('');

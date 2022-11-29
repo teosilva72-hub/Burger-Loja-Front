@@ -4,8 +4,9 @@ html, body{
     width: 100%;
 }
 .registerUser{
+    width: 90%;
     position: absolute;
-    top: 5%;
+    top: 15%;
     box-sizing: border-box;
 }
 .attrSpan{
