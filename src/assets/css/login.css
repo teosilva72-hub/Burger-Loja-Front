@@ -169,13 +169,6 @@ body, html {
   cursor: pointer;
 }
 
-.text-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-}
-
 .txt1 {
   font-size: 14px;
   color: #adadad;

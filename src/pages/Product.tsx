@@ -20,10 +20,6 @@ const Product = () => {
         const response: AxiosResponse<Iprodutct> = await Service.Product();
         setRes(response.data as any);
         const token = localStorage.getItem('Bearer');
-
-        if (token) {
-
-        }
     }
 
     return (
@@ -38,9 +34,10 @@ const Product = () => {
                                 <div className='col-sm-12 col-md-6 col-lg-3 mb-3' key={e._id}>
                                     <div className="card" id={e._id} >
                                         <div className="card-body">
-                                            <h5 className="card-title">{e.nome ?? '...'}</h5>
-                                            <h6 className="card-subtitle mb-2 text-muted">{e.categoria}</h6>
-                                            <p className="card-text">Descrição: {e.descricao}</p>
+                                            <h5 className="card-title">{e.nome ?? '...'}</h5><hr />
+                                            <h5 className="card-subtitle mb-2 text-muted">Categoria: {e.categoria}</h5>
+                                            <h6 className="card-text">Descrição: {e.descricao}</h6>
+                                            <h6>Preço: R${e.valor}</h6>
                                             <a href="#" className="card-link">Card link</a>
                                             <a href="#" className="card-link">Another link</a>
                                         </div>
