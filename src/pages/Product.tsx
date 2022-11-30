@@ -9,8 +9,12 @@ import '../assets/css/product.css';
 const Product = () => {
     const [mudar, setMudar] = useState<boolean>(false);
     const [res, setRes] = useState<Array<Iprodutct> | null>(null);
-
-
+    const [store, setStore] = useState<any>([{
+        product: {},
+        qtd: 0,
+    }]);
+    console.log(store)
+    const [qtd, setQtd] = useState<number>()
     useEffect(() => {
         if (!res) {
             getData()
@@ -22,7 +26,6 @@ const Product = () => {
         setRes(response.data as any);
         const token = localStorage.getItem('Bearer');
         const user = await Service.GetUserLogado();
-        console.log(user)
     }
 
     return (
@@ -41,8 +44,9 @@ const Product = () => {
                                             <h5 className="card-subtitle mb-2 text-muted">Categoria: {e.categoria}</h5>
                                             <h6 className="card-text">Descrição: {e.descricao}</h6>
                                             <h6>Preço: R${e.valor}</h6>
-                                            <a href="#" className="card-link">Card link</a>
-                                            <a href="#" className="card-link">Another link</a>
+                                            
+                                            <input type="number" className='mb-3 form-control' value={qtd} onChange={(e: any) => setQtd(e.target.value)}/>
+                                            <button type='button' className="card-link btn btn-primary mb-3" onClick={() => setStore((store: any) => [...store, {product: e, qtd: qtd}])}>Carrinho</button>
                                         </div>
                                     </div>
                                 </div>
