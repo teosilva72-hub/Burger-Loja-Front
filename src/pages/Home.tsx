@@ -5,7 +5,6 @@ const Home = () => {
   const navigate = useNavigate();
   const auth: any = localStorage.getItem('Bearer');
   if(auth === null){
-    console.log('aqui')
     navigate('/product');
   }  
 

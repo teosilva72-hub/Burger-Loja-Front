@@ -4,7 +4,8 @@ import axios, { AxiosResponse } from 'axios';
 import Service from '../service/backend';
 import API, { Iprodutct } from '../service/InterfacesApi';
 import { useEffect, useState } from 'react';
-import '../assets/css/product.css'
+import '../assets/css/product.css';
+
 const Product = () => {
     const [mudar, setMudar] = useState<boolean>(false);
     const [res, setRes] = useState<Array<Iprodutct> | null>(null);
@@ -20,6 +21,8 @@ const Product = () => {
         const response: AxiosResponse<Iprodutct> = await Service.Product();
         setRes(response.data as any);
         const token = localStorage.getItem('Bearer');
+        const user = await Service.GetUserLogado();
+        console.log(user)
     }
 
     return (

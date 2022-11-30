@@ -3,12 +3,13 @@ import { redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import API from './InterfacesApi';
 import { useNavigate } from 'react-router';
+import { async } from 'q';
 
 export default new class {
 
     async token(page: string) {
         const instance = axios.create({
-            baseURL: `${process.env.host}/${page}`,
+            baseURL: `192.168.15.7/${page}`,
             timeout: 800000,
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('Bearer') }
         });
@@ -22,12 +23,12 @@ export default new class {
                 "password": password
             };
 
-            const res = await axios.post('http://192.168.0.104:3005/login', data);
+            const res = await axios.post('http://192.168.15.7:3005/login', data);
             //await axios.defaults.headers.common['Authorization'] = res.data;
             localStorage.setItem('Bearer', res.data.data);
             if (res.data.status) {
                 const instance = axios.create({
-                    baseURL: 'http://192.168.0.104:3000/login',
+                    baseURL: 'http://192.168.15.7:3000/login',
                     timeout: 800000,
                     headers: { 'Authorization': 'Bearer ' + res.data.data }
                 });
@@ -47,9 +48,9 @@ export default new class {
 
     async Product() {
         try {
-        
-            await this.token('product');
-            const product: API = await axios.get('http://192.168.0.104:3005/product-list');
+
+            await this.token('product-list');
+            const product: API = await axios.get('http://192.168.15.7:3005/product-list');
             return product.data;
         } catch (error) {
             console.log(error);
@@ -59,17 +60,18 @@ export default new class {
     }
 
     async RegisterUser(data: any) {
-        try {           
+        try {
+            console.log(data)
             await this.token('register-user');
-            const res = await axios.post('http://192.168.0.104:3005/user-register', data);
+            const res = await axios.post('http://192.168.15.7:3005/user-register', data);
             const user = res.data.data;
             toast.success(`Parabéns ${user.name}! ${res.data.message}`, {
                 className: 'toast-success',
                 theme: 'colored',
             });
             return true;
-        }catch(error){
-            toast.error(`Erro ao criar usuário: ${error}`, {
+        } catch (err: any) {
+            toast.error(`Erro ao criar usuário, ${err.response.data.data}`, {
                 className: 'toast-error',
                 theme: 'colored',
             });
@@ -77,9 +79,44 @@ export default new class {
         }
     }
 
-    async GetUserLogado(){
-        await this.token('register-user');
-        const product: API = await axios.get('http://192.168.0.104:3005/user-logado');
-        return product.data;
+    async GetUserLogado() {
+        try {
+            await this.token('product-list');
+            const res: any = await axios.get('http://192.168.15.7:3005/user-logado');
+            const user = res.data
+            toast.success(`Boas compras, ${user.data.name}!`, {
+                className: 'toast-success',
+                theme: 'colored',
+                position: toast.POSITION.TOP_CENTER
+            });
+            return user.data;
+        }catch(err:any){
+            toast.error(`Faça login!`, {
+                className: 'toast-error',
+                theme: 'colored',
+                
+            });
+            return null;
+        }
+    }
+    async Perfil() {
+        try {
+            await this.token('product-list');
+            const res: any = await axios.get('http://192.168.15.7:3005/user-logado');
+            const user = res.data
+            toast.success(`Boas compras, ${user.data.name}!`, {
+                className: 'toast-primary',
+                theme: 'colored',
+                position: toast.POSITION.TOP_LEFT
+            });
+            return user.data;
+        }catch(err:any){
+            toast.error(`Faça login!`, {
+                className: 'toast-error',
+                theme: 'colored',
+                
+            });
+            return null;
+        }
     }
 }
