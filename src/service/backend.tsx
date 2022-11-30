@@ -22,12 +22,12 @@ export default new class {
                 "password": password
             };
 
-            const res = await axios.post('http://192.168.15.7:3005/login', data);
+            const res = await axios.post('http://192.168.0.104:3005/login', data);
             //await axios.defaults.headers.common['Authorization'] = res.data;
             localStorage.setItem('Bearer', res.data.data);
             if (res.data.status) {
                 const instance = axios.create({
-                    baseURL: 'http://192.168.15.7:3000/login',
+                    baseURL: 'http://192.168.0.104:3000/login',
                     timeout: 800000,
                     headers: { 'Authorization': 'Bearer ' + res.data.data }
                 });
@@ -49,7 +49,7 @@ export default new class {
         try {
         
             await this.token('product');
-            const product: API = await axios.get('http://192.168.15.7:3005/product-list');
+            const product: API = await axios.get('http://192.168.0.104:3005/product-list');
             return product.data;
         } catch (error) {
             console.log(error);
@@ -61,7 +61,7 @@ export default new class {
     async RegisterUser(data: any) {
         try {           
             await this.token('register-user');
-            const res = await axios.post('http://192.168.15.7:3005/user-register', data);
+            const res = await axios.post('http://192.168.0.104:3005/user-register', data);
             const user = res.data.data;
             toast.success(`Parabéns ${user.name}! ${res.data.message}`, {
                 className: 'toast-success',
@@ -75,5 +75,11 @@ export default new class {
             });
             return false;
         }
+    }
+
+    async GetUserLogado(){
+        await this.token('register-user');
+        const product: API = await axios.get('http://192.168.0.104:3005/user-logado');
+        return product.data;
     }
 }

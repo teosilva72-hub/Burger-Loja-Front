@@ -90,7 +90,7 @@ const Login = () => {
                             </div>
                             <div className="modal-body">
                                 <div className="alert alert-warning" role="alert">
-                                    Atenção! Informe o seu e-mail para ser enviado uma nova senha.
+                                    Atenção! Informe o e-mail de cadastro para ser enviado a nova senha.
                                 </div>
                                 
                                 <input type="email" value='' name='email' className='form-control mb-3' required placeholder='email@email.com'/>

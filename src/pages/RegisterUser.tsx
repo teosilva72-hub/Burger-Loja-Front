@@ -3,6 +3,7 @@ import NavBar from './template';
 import { useState } from 'react';
 import Service from '../service/backend';
 import { useNavigate } from 'react-router';
+import {useForm} from 'react-hook-form';
 import '../assets/css/registerUser.css';
 const RegisterUser = () => {
     const [name, setName] = useState('');
@@ -12,22 +13,21 @@ const RegisterUser = () => {
     const [cell, setCell] = useState('');
     const [sex, setSex] = useState('');
     const [birth, setBirth] = useState('');
-    const [photo, setPhoto] = useState('');
+    const [photo, setPhoto] = useState<any>(null);
     const navigate = useNavigate();
     const createUser = async (e: any) => {
         e.preventDefault();
-        const data = {
-            name: name,
-            nickName: user,
-            password: pass,
-            email: email,
-            cell: cell,
-            sex: sex,
-            birth: birth,
-            photo: photo
-
-        };
-        const check:boolean = await Service.RegisterUser(data);
+        let formData = new FormData();
+        formData.append('name', name);
+        formData.append('nickName', user);
+        formData.append('password', pass);
+        formData.append('email', email);
+        formData.append('cell', cell);
+        formData.append('sex', sex);
+        formData.append('birth', birth);
+        formData.append('photo', photo);
+        
+        const check:boolean = await Service.RegisterUser(formData);
         if(check){
             setTimeout(() => {
                 navigate('/login');
@@ -97,8 +97,9 @@ const RegisterUser = () => {
                         <div className='col-sm-12 col-md-6 col-lg-6 mb-3'>
                             <span className="attrSpan">Foto de perfil</span>
                             <input className="form-control" type="file" id="formFile" name='photo'
-                                value={photo}
-                                onChange={(e) => setPhoto(e.target.value)}
+                                
+                                onChange={(e:any) => {setPhoto(e.target.files[0])}}
+
                             />
                         </div>
                         <div className='col-sm-12 col-md-6'>

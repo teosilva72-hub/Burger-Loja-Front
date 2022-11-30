@@ -1,14 +1,19 @@
 import NavBar from './template';
 import React, { Component } from 'react';
+import { useNavigate } from 'react-router';
+const Home = () => {
+  const navigate = useNavigate();
+  const auth: any = localStorage.getItem('Bearer');
+  if(auth === null){
+    console.log('aqui')
+    navigate('/product');
+  }  
 
-class Home extends Component {
-    render() {
-        return (
-          <div>
-            <NavBar />
-          </div>
-        );
-      }
+  return (
+    <div>
+      <NavBar />
+    </div>
+  );
 }
-  
-  export default Home;
+export default Home;
+
