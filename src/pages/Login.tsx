@@ -17,6 +17,7 @@ const Login = () => {
 
     const requestLogin = async (e: any) => {
         e.preventDefault();
+        
         const checked: any = await Service.Login(email, password);
         if (checked) {
             toast.success('Acesso Autorizado!', {

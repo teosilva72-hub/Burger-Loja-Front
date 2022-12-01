@@ -9,7 +9,7 @@ export default new class {
 
     async token(page: string) {
         const instance = axios.create({
-            baseURL: `192.168.15.7/${page}`,
+            baseURL: `192.168.15.4/${page}`,
             timeout: 800000,
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('Bearer') }
         });
@@ -23,12 +23,15 @@ export default new class {
                 "password": password
             };
 
-            const res = await axios.post('http://192.168.15.7:3005/login', data);
+            const res = await axios.post('http://192.168.15.4:3005/login', data);
             //await axios.defaults.headers.common['Authorization'] = res.data;
             localStorage.setItem('Bearer', res.data.data);
+            const user = await this.GetUserLogado();
+            localStorage.setItem('access', user.levelAccess);
+
             if (res.data.status) {
                 const instance = axios.create({
-                    baseURL: 'http://192.168.15.7:3000/login',
+                    baseURL: 'http://192.168.15.4:3000/login',
                     timeout: 800000,
                     headers: { 'Authorization': 'Bearer ' + res.data.data }
                 });
@@ -50,7 +53,7 @@ export default new class {
         try {
 
             await this.token('product-list');
-            const product: API = await axios.get('http://192.168.15.7:3005/product-list');
+            const product: API = await axios.get('http://192.168.15.4:3005/product-list');
             return product.data;
         } catch (error) {
             console.log(error);
@@ -63,7 +66,7 @@ export default new class {
         try {
             console.log(data)
             await this.token('register-user');
-            const res = await axios.post('http://192.168.15.7:3005/user-register', data);
+            const res = await axios.post('http://192.168.15.4:3005/user-register', data);
             const user = res.data.data;
             toast.success(`Parabéns ${user.name}! ${res.data.message}`, {
                 className: 'toast-success',
@@ -82,7 +85,7 @@ export default new class {
     async GetUserLogado() {
         try {
             await this.token('product-list');
-            const res: any = await axios.get('http://192.168.15.7:3005/user-logado');
+            const res: any = await axios.get('http://192.168.15.4:3005/user-logado');
             const user = res.data
             toast.success(`Boas compras, ${user.data.name}!`, {
                 className: 'toast-success',
@@ -102,9 +105,9 @@ export default new class {
     async Perfil() {
         try {
             await this.token('product-list');
-            const res: any = await axios.get('http://192.168.15.7:3005/user-logado');
+            const res: any = await axios.get('http://192.168.15.4:3005/user-logado');
             const user = res.data
-            toast.success(`Boas compras, ${user.data.name}!`, {
+            toast.success(`Seu perfil!, ${user.data.name}!`, {
                 className: 'toast-primary',
                 theme: 'colored',
                 position: toast.POSITION.TOP_LEFT

@@ -10,8 +10,9 @@ import PrivateRoute from "./service/private";
 import ProtectedRoute from "./service/private";
 
 function App() {
-  const verify: any = localStorage.getItem('Bearer');
-  
+  const verify: any = localStorage.getItem('access');
+  let check = false;
+  if(verify == '2') check = true;
   return (
     <div className="App">
       <Routes>
@@ -22,7 +23,7 @@ function App() {
         <Route 
         path='/admin'
         element={
-          <ProtectedRoute user={verify}>
+          <ProtectedRoute user={check}>
           <Admin/>
         </ProtectedRoute>
         } />

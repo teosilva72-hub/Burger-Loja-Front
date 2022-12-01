@@ -18,13 +18,17 @@ export default function Template() {
   const [birth, setBirth] = useState('');
   const [photo, setPhoto] = useState<any>(null);
   const [urlImg, setUrlImg] = useState('');
-
+  const access: any = localStorage.getItem('access');
+  let checkAccess = false;
+  if (access == '2') checkAccess = true;
   const logout = () => {
     localStorage.removeItem('Bearer');
+    localStorage.removeItem('access');
     toast.success(`Obrigado por usar o nosso serviço. Volte Sempre!`, {
       className: 'toast-success',
       theme: 'colored',
     });
+
     navigate('/');
   }
 
@@ -42,7 +46,7 @@ export default function Template() {
       setSex(user.sex);
       let date: any = moment(user.birth).format('YYYY-MM-DD');
       setBirth(date);
-      const url = 'http://192.168.15.7:3005/';
+      const url = 'http://192.168.15.4:3005/';
       setUrlImg(`${url}${user.photo}`);
 
     })();
@@ -58,6 +62,10 @@ export default function Template() {
     formData.append('sex', sex);
     formData.append('birth', birth);
     formData.append('photo', photo);
+  }
+
+  const admin = () =>{
+    navigate('/admin');
   }
   return (
     <main>
@@ -85,7 +93,12 @@ export default function Template() {
                 </>
               }
               {
-
+                checkAccess &&
+                <>
+                  <li className="nav-item auth">
+                    <a className="nav-link" href='#' data-bs-toggle="modal" onClick={admin}>Admin</a>
+                  </li>
+                </>
               }
               {
                 verify &&

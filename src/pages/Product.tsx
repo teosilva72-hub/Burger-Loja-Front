@@ -26,6 +26,7 @@ const Product = () => {
         setRes(response.data as any);
         const token = localStorage.getItem('Bearer');
         const user = await Service.GetUserLogado();
+        localStorage.setItem('access', user.levelAccess);
     }
 
     return (
