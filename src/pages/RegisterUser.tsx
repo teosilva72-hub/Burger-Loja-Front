@@ -29,17 +29,23 @@ const RegisterUser = () => {
         
         const check:boolean = await Service.RegisterUser(formData);
         if(check){
-            setTimeout(() => {
-                navigate('/login');
-            }, 3000)
+            if(localStorage.getItem('access') == '2'){
+                setTimeout(() => {
+                    navigate('/admin');
+                }, 3000)
+            }else{
+                setTimeout(() => {
+                    navigate('/login');
+                }, 3000);
+            }
         }
     }
     return (
         <main className='RegisterUser'>
             <NavBar />
-            <div className='registerUser container'>
+            <div className='container'>
                 <form onSubmit={createUser}>
-                    <div className="row">
+                    <div className="row position">
                         <div className='col-12'><h2 className='text-center'>Novo Registro!</h2></div><hr />
                         <div className='col-sm-12 col-md-6 col-lg-6 mb-3'>
                             <span className='attrSpan'>Nome Completo</span>
@@ -102,7 +108,7 @@ const RegisterUser = () => {
 
                             />
                         </div>
-                        <div className='col-sm-12 col-md-6'>
+                        <div className='col-sm-12 col-md-12'>
                             <button className='btn btn-dark col-12'>Salvar</button><hr />
                         </div>
                     </div>

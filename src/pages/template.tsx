@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import Service from '../service/backend';
 import moment from 'moment';
 import '../assets/css/template.css';
+import App from "../App";
+
 export default function Template() {
 
   const verify: any = localStorage.getItem('Bearer');
@@ -27,6 +29,7 @@ export default function Template() {
     toast.success(`Obrigado por usar o nosso serviço. Volte Sempre!`, {
       className: 'toast-success',
       theme: 'colored',
+      position: toast.POSITION.TOP_LEFT
     });
 
     navigate('/');
@@ -65,6 +68,7 @@ export default function Template() {
   }
 
   const admin = () =>{
+    App(true);
     navigate('/admin');
   }
   return (
@@ -96,7 +100,7 @@ export default function Template() {
                 checkAccess &&
                 <>
                   <li className="nav-item auth">
-                    <a className="nav-link" href='#' data-bs-toggle="modal" onClick={admin}>Admin</a>
+                    <a className="nav-link" href='/admin' data-bs-toggle="modal" onClick={admin}>Admin</a>
                   </li>
                 </>
               }

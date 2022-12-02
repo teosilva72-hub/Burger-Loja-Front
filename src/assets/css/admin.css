@@ -10,3 +10,6 @@ html,body{
     position: absolute;
     top: 10%;
 }
+.cardAdmin{
+    min-height: 160px;
+}

@@ -5,6 +5,7 @@ import Service from '../service/backend';
 import API, { Iprodutct } from '../service/InterfacesApi';
 import { useEffect, useState } from 'react';
 import '../assets/css/product.css';
+import { toast } from 'react-toastify';
 
 const Product = () => {
     const [mudar, setMudar] = useState<boolean>(false);
@@ -27,6 +28,11 @@ const Product = () => {
         const token = localStorage.getItem('Bearer');
         const user = await Service.GetUserLogado();
         localStorage.setItem('access', user.levelAccess);
+        toast.success(`Produtos`, {
+            className: 'toast-success',
+            theme: 'colored',
+            position: toast.POSITION.BOTTOM_LEFT
+        });
     }
 
     return (

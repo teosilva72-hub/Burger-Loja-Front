@@ -3,11 +3,10 @@ html, body{
     padding: 0;
     width: 100%;
 }
-.registerUser{
-    width: 90%;
-    position: absolute;
-    top: 15%;
-    box-sizing: border-box;
+.position{
+    
+    position: relative;
+    top: 50px !important;
 }
 .attrSpan{
     font-weight: 900;

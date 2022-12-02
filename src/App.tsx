@@ -9,10 +9,14 @@ import Admin from "./pages/Admin";
 import PrivateRoute from "./service/private";
 import ProtectedRoute from "./service/private";
 
-function App() {
+function check(check:boolean){
   const verify: any = localStorage.getItem('access');
-  let check = false;
-  if(verify == '2') check = true;
+  check = false;
+  if (verify == '2') check = true;
+  return check;
+}
+ const App = (e:any) => {
+ check(e)
   return (
     <div className="App">
       <Routes>
@@ -20,16 +24,15 @@ function App() {
         <Route path="/" element={<Product />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register-user" element={<RegisterUser />} />
-        <Route 
-        path='/admin'
-        element={
-          <ProtectedRoute user={check}>
-          <Admin/>
-        </ProtectedRoute>
-        } />
+        <Route
+          path='/admin'
+          element={
+            <ProtectedRoute user={check}>
+              <Admin />
+            </ProtectedRoute>
+          } />
       </Routes>
     </div>
   );
 }
-
-export default App;
+export default App

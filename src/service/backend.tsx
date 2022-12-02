@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import API from './InterfacesApi';
 import { useNavigate } from 'react-router';
 import { async } from 'q';
+import Product from '../pages/Product';
 
 export default new class {
 
@@ -87,11 +88,6 @@ export default new class {
             await this.token('product-list');
             const res: any = await axios.get('http://192.168.15.4:3005/user-logado');
             const user = res.data
-            toast.success(`Boas compras, ${user.data.name}!`, {
-                className: 'toast-success',
-                theme: 'colored',
-                position: toast.POSITION.TOP_CENTER
-            });
             return user.data;
         }catch(err:any){
             toast.error(`Faça login!`, {
@@ -121,5 +117,14 @@ export default new class {
             });
             return null;
         }
+    }
+
+    async ListUsers(){
+        
+        await this.token('user-list');
+        const product:any = await this.Product();
+        const res: any = await axios.get('http://192.168.15.4:3005/user-list');
+        const user = res.data
+        return [user, product];
     }
 }
