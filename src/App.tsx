@@ -12,7 +12,7 @@ import ProtectedRoute from "./service/private";
 function check(check:boolean){
   const verify: any = localStorage.getItem('access');
   check = false;
-  if (verify == '2') check = true;
+  if (verify == '2') check = false;
   return check;
 }
  const App = (e:any) => {

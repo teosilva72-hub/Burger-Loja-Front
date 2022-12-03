@@ -104,7 +104,7 @@ const RegisterUser = () => {
                             <span className="attrSpan">Foto de perfil</span>
                             <input className="form-control" type="file" id="formFile" name='photo'
                                 
-                                onChange={(e:any) => {setPhoto(e.target.files[0])}}
+                                onChange={(e:any) => {setPhoto(e.target.files[0])}} required
 
                             />
                         </div>

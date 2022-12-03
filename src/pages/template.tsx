@@ -22,7 +22,7 @@ export default function Template() {
   const [urlImg, setUrlImg] = useState('');
   const access: any = localStorage.getItem('access');
   let checkAccess = false;
-  if (access == '2') checkAccess = true;
+  if (access == '2') checkAccess = false;
   const logout = () => {
     localStorage.removeItem('Bearer');
     localStorage.removeItem('access');
@@ -40,34 +40,34 @@ export default function Template() {
     (async () => {
       const data: any = await Service.Perfil();
       let user = data;
-      console.log(user)
       setName(user.name);
       setUser(user.nickName);
       setEmail(user.email);
       setPass('');
       setCell(user.cell);
       setSex(user.sex);
-      let date: any = moment(user.birth).format('YYYY-MM-DD');
-      setBirth(date);
+      setBirth(user.birth);
       const url = 'http://192.168.15.4:3005/';
       setUrlImg(`${url}${user.photo}`);
 
     })();
   }
-  const perfil = (e: any) => {
+  const perfil = async (e: any) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append('name', name);
-    formData.append('nickName', user);
-    formData.append('password', pass);
-    formData.append('email', email);
-    formData.append('cell', cell);
-    formData.append('sex', sex);
-    formData.append('birth', birth);
+    formData.set('name', name);
+    formData.set('nickName', user);
+    formData.set('password', pass);
+    formData.set('email', email);
+    formData.set('cell', cell);
+    formData.set('sex', sex);
+    formData.set('birth', birth);
     formData.append('photo', photo);
+    const users: any = await Service.EditUser(formData);
+
   }
 
-  const admin = () =>{
+  const admin = () => {
     App(true);
     navigate('/admin');
   }
@@ -121,9 +121,10 @@ export default function Template() {
         </div>
       </nav>
 
-      //Modal perfil
-      <div className="modal fade" id="perfil" aria-labelledby="perfil" aria-hidden="true">
-        <form onSubmit={perfil}>
+      <form onSubmit={perfil}>
+
+        <div className="modal fade" id="perfil" aria-labelledby="perfil" aria-hidden="true">
+
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -159,7 +160,7 @@ export default function Template() {
                   </div>
                   <div className='col-sm-12 col-md-6 col-lg-6 mb-3'>
                     <span className='attrSpan'>Senha</span>
-                    <input type="password" className="form-control" id="password" name='password'
+                    <input type="password" className="form-control" id="password" name='password' required
                       value={pass}
                       onChange={(e) => setPass(e.target.value)}
                     />
@@ -192,7 +193,7 @@ export default function Template() {
                   </div>
                   <div className='col-sm-12 col-md-6 col-lg-6 mb-3'>
                     <span className="attrSpan">Foto de perfil</span>
-                    <input className="form-control" type="file" id="formFile" name='photo'
+                    <input className="form-control" type="file" id="formFile" name='photo' required
 
                       onChange={(e: any) => { setPhoto(e.target.files[0]) }}
 
@@ -203,14 +204,13 @@ export default function Template() {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Voltar</button>
-                <button type="submit" className="btn btn-danger">Atualizar</button>
+                <button className="btn btn-danger">Atualizar</button>
               </div>
             </div>
           </div>
-        </form>
-      </div>
+
+        </div>
+      </form>
     </main>
-
-
   );
 }

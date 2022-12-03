@@ -13,6 +13,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [success, setSuccess] = useState(false);
+    const [recover, setRecover] = useState("");
     const navigate = useNavigate();
 
     const requestLogin = async (e: any) => {
@@ -27,6 +28,17 @@ const Login = () => {
             setTimeout(() => {
                 navigate('/');
             }, 3000)
+        }
+    }
+
+    const recoverPass = async(e:any) =>{
+        e.preventDefault();
+        const check = await Service.RecoverPass(recover);
+        if (check) {
+            toast.success(`Nova senha enviada para ${recover}`, {
+                className: 'toast-success',
+                theme: 'colored',
+            });
         }
     }
 
@@ -82,7 +94,7 @@ const Login = () => {
                 </div>
             </div>
             <div className="modal fade" id="recuperarSenha" aria-labelledby="recuperarSenha" aria-hidden="true">
-                <form>
+                <form className='recover-pass' onSubmit={recoverPass}>
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -94,11 +106,12 @@ const Login = () => {
                                     Atenção! Informe o e-mail de cadastro para ser enviado a nova senha.
                                 </div>
                                 
-                                <input type="email" value='' name='email' className='form-control mb-3' required placeholder='email@email.com'/>
+                                <input type="email" value={recover}
+                                    onChange={(e) => setRecover(e.target.value)} name='email' className='form-control mb-3' required placeholder='email@email.com'/>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-success">Solicitar</button>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Voltar</button>
+                                <button type="submit" className="btn btn-success">Solicitar</button>
                             </div>
                         </div>
                     </div>

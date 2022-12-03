@@ -26,16 +26,16 @@ export default function Admin() {
         registerProd = e;
     }
 
-    (async () => {
-        const obj = await Service.ListUsers();
+    const obj = Service.ListUsers();
+    obj.then(obj=>{
         const users = obj[0];
         const product = obj[1];
         setTotalUser(users.data.length);
         setTotalProduct(product.data.length);
         setObjProduct(product.data);
         setObjUser(users.data);
-    })();
-
+    });
+    
     return (
 
         <main className='Admin'>
@@ -212,9 +212,7 @@ export default function Admin() {
                             <table className="table table-dark table-striped" >
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
                                         <th scope="col">Nome</th>
-                                        <th scope="col">Nickname</th>
                                         <th scope="col">Telefone</th>
                                         
                                     </tr>
@@ -222,20 +220,10 @@ export default function Admin() {
                                 {objUser?.map((e: any, id: number) => {
                                     return (
                                         <>
-
                                             <tbody>
                                                 <tr>
-                                                    <th scope="row">1</th>
                                                     <td>{e.name}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>{e.nickName}</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td >{e.cell}</td>
+                                                    <td>{e.cell}</td>
                                                 </tr>
                                             </tbody>
                                         </>

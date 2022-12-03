@@ -65,7 +65,6 @@ export default new class {
 
     async RegisterUser(data: any) {
         try {
-            console.log(data)
             await this.token('register-user');
             const res = await axios.post('http://192.168.15.4:3005/user-register', data);
             const user = res.data.data;
@@ -126,5 +125,43 @@ export default new class {
         const res: any = await axios.get('http://192.168.15.4:3005/user-list');
         const user = res.data
         return [user, product];
+    }
+
+    async RecoverPass(data:any){
+       try{
+        data = {
+            "email":data
+        }
+        const res: any = await axios.post('http://192.168.15.4:3005/recover-pass', data);
+        return true
+       }catch(error){
+        console.log(error);
+        toast.error('Email não encontrado, tente novamente.', {
+            className: 'toast-error',
+            theme: 'colored',
+        });
+        return false;
+       }
+    }
+
+    async EditUser(data:any){
+        try{
+            await this.token('user-edit');
+            const res:any = await axios.put('http://192.168.15.4:3005/user-edit', data);
+            const user = await this.GetUserLogado();
+            toast.success(`Atualizado com sucesso!`, {
+                className: 'toast-primary',
+                theme: 'colored',
+                position: toast.POSITION.TOP_LEFT
+            });
+            return user;
+        }catch(error:any){
+            console.log(error.response.data);
+            toast.error(`Error ${error.response.data.data}`, {
+                className: 'toast-error',
+                theme: 'colored',
+            });
+            return false;
+        }
     }
 }
