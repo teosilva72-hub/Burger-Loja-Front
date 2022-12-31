@@ -10,7 +10,7 @@ export default new class {
 
     async token(page: string) {
         const instance = axios.create({
-            baseURL: `192.168.15.4/${page}`,
+            baseURL: `192.168.15.5/${page}`,
             timeout: 800000,
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('Bearer') }
         });
@@ -24,7 +24,7 @@ export default new class {
                 "password": password
             };
 
-            const res = await axios.post('http://192.168.15.4:3005/login', data);
+            const res = await axios.post('http://192.168.15.5:3005/login', data);
             //await axios.defaults.headers.common['Authorization'] = res.data;
             localStorage.setItem('Bearer', res.data.data);
             const user = await this.GetUserLogado();
@@ -32,7 +32,7 @@ export default new class {
 
             if (res.data.status) {
                 const instance = axios.create({
-                    baseURL: 'http://192.168.15.4:3000/login',
+                    baseURL: 'http://192.168.15.5:3000/login',
                     timeout: 800000,
                     headers: { 'Authorization': 'Bearer ' + res.data.data }
                 });
@@ -54,7 +54,7 @@ export default new class {
         try {
 
             await this.token('product-list');
-            const product: API = await axios.get('http://192.168.15.4:3005/product-list');
+            const product: API = await axios.get('http://192.168.15.5:3005/product-list');
             return product.data;
         } catch (error) {
             console.log(error);
@@ -66,7 +66,7 @@ export default new class {
     async RegisterUser(data: any) {
         try {
             await this.token('register-user');
-            const res = await axios.post('http://192.168.15.4:3005/user-register', data);
+            const res = await axios.post('http://192.168.15.5:3005/user-register', data);
             const user = res.data.data;
             toast.success(`Parabéns ${user.name}! ${res.data.message}`, {
                 className: 'toast-success',
@@ -85,7 +85,7 @@ export default new class {
     async GetUserLogado() {
         try {
             await this.token('product-list');
-            const res: any = await axios.get('http://192.168.15.4:3005/user-logado');
+            const res: any = await axios.get('http://192.168.15.5:3005/user-logado');
             const user = res.data
             return user.data;
         }catch(err:any){
@@ -100,7 +100,7 @@ export default new class {
     async Perfil() {
         try {
             await this.token('product-list');
-            const res: any = await axios.get('http://192.168.15.4:3005/user-logado');
+            const res: any = await axios.get('http://192.168.15.5:3005/user-logado');
             const user = res.data
             toast.success(`Seu perfil!, ${user.data.name}!`, {
                 className: 'toast-primary',
@@ -122,7 +122,7 @@ export default new class {
         
         await this.token('user-list');
         const product:any = await this.Product();
-        const res: any = await axios.get('http://192.168.15.4:3005/user-list');
+        const res: any = await axios.get('http://192.168.15.5:3005/user-list');
         const user = res.data
         return [user, product];
     }
@@ -132,7 +132,7 @@ export default new class {
         data = {
             "email":data
         }
-        const res: any = await axios.post('http://192.168.15.4:3005/recover-pass', data);
+        const res: any = await axios.post('http://192.168.15.5:3005/recover-pass', data);
         return true
        }catch(error){
         console.log(error);
@@ -147,7 +147,7 @@ export default new class {
     async EditUser(data:any){
         try{
             await this.token('user-edit');
-            const res:any = await axios.put('http://192.168.15.4:3005/user-edit', data);
+            const res:any = await axios.put('http://192.168.15.5:3005/user-edit', data);
             const user = await this.GetUserLogado();
             toast.success(`Atualizado com sucesso!`, {
                 className: 'toast-primary',

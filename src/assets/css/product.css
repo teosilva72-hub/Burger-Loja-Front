@@ -3,6 +3,7 @@ html, body{
     margin: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .sectionProduct{
@@ -17,8 +18,9 @@ html, body{
 
 .imgProduct{
     width: 100%;
-    height: 150px;
+    height: 100%;
     box-shadow: 10px 5px 15px black;
+    object-fit: cover;
 }
 .productCrd{
     max-height: 100%;

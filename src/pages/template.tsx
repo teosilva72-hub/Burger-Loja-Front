@@ -47,7 +47,7 @@ export default function Template() {
       setCell(user.cell);
       setSex(user.sex);
       setBirth(user.birth);
-      const url = 'http://192.168.15.4:3005/';
+      const url = 'http://192.168.15.5:3005/';
       setUrlImg(`${url}${user.photo}`);
 
     })();

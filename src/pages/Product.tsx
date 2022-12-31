@@ -24,7 +24,7 @@ const Product = () => {
             getData()
         }
     }, [])
-    const url = 'http://192.168.15.4:3005/';
+    const url = 'http://192.168.15.5:3005/';
     async function getData() {
         const response: AxiosResponse<Iprodutct> = await Service.Product();
         setRes(response.data as any);
@@ -78,46 +78,35 @@ const Product = () => {
                         {res?.map((e: any, id: number) => {
                             return (
                                 <>
-
                                     <div className='col-sm-6 col-md-4 col-lg-3 mb-3' key={e._id}>
                                         <div className="card productCrd" id={e._id} >
                                             <div className="card-body">
                                                 <img src={`${url}${e.photo}`} className='imgProduct mb-3' />
-                                                <h5 className="card-title">{e.nome ?? '...'}</h5><hr />
-                                                <h5 className="card-subtitle mb-2 text-muted">Categoria: {e.categoria}</h5>
-                                                <h6 className="card-text">Descrição: {e.descricao}</h6><hr />
-                                                <h6>Preço: R${e.valor}</h6>
-                                                <input type="range" className='mb-3 form-range' value={qtd} min="1" max="100" onChange={(e: any) => setQtd(e.target.value)} />
-                                                <h6 className='card-subtitle mb-2 text-muted text-center'>Total: {qtd}</h6>
+                                                <h5 className="card-title">{e.titulo ?? '...'}</h5><hr />
+                                                <h6 className="card-subtitle mb-2 text-muted">Categoria: {e.premio}</h6>
+                                                <p className="card-text">Descrição: {e.descricao}</p><hr />
+                                                <h6>Valor: R${e.valor}</h6>
 
-                                                <div className='row'>
-                                                    <div className='col-6'>
-                                                        <button type="button" className="btn btn-warning col-12" data-bs-toggle="modal" data-bs-target={`#${e.nome.replace(' ', '')}`}>
-                                                            Detalhe
-                                                        </button>
-                                                    </div>
-                                                    <div className='col-6'>
-                                                        <button type='button' className="card-link btn btn-danger mb-3 col-12" onClick={() =>
-                                                            setStore((store: any) => addCar([store, { car: e, qtd: qtd }]))
-                                                        } >Carrinho</button>
-                                                    </div>
-                                                </div>
+
+                                
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="modal fade" id={e.nome.replace(' ', '')} aria-labelledby={e._id} aria-hidden="true">
+                                    <div className="modal fade" id={e.titulo.replace(' ', '')} aria-labelledby={e._id} aria-hidden="true">
                                         <div className="modal-dialog">
                                             <div className="modal-content">
                                                 <div className="modal-header">
-                                                    <h1 className="modal-title fs-5" id="exampleModalLabel">{e.nome}</h1>
+                                                    <h1 className="modal-title fs-5" id="exampleModalLabel">{e.titulo}</h1>
                                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div className="modal-body">
                                                     <img src={`${url}${e.photo}`} className='imgProduct mb-3' />
                                                     <h6>Descrição: {e.descricao}</h6><hr />
-                                                    <h6>Tipo: {e.marca}</h6><hr />
+                                                    <h6>Titulo: {e.titulo}</h6><hr />
                                                     <h6>Valor: R${e.valor}</h6><hr />
-                                                    <h6>Código: {e.cod_barras}</h6>
+                                                    <h6>Data incial: {e.dt_init}</h6>
+                                                    <h6>Data final: {e.dt_final}</h6>
+                                                    <h6>Data sorteio: {e.dt_sorteio}</h6>
                                                 </div>
                                                 <div className="modal-footer">
                                                     <button type="button" className="btn btn-danger col-12" data-bs-dismiss="modal">Voltar</button>
